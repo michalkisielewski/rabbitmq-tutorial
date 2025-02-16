@@ -1,0 +1,36 @@
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+  name: production-ready
+spec:
+  image: rabbitmq:4.0.5-management
+  #image: rabbitmq:3.13.7-management
+  replicas: 3
+  resources:
+    requests:
+      cpu: "100m" # should be 2
+      memory: 500Mi # should be 2Gi
+    limits:
+      cpu: 4
+      memory: 10Gi
+  tls:
+    secretName: tls-secret
+  rabbitmq:
+    additionalConfig: |
+      cluster_partition_handling = pause_minority
+      disk_free_limit.relative = 1.0
+      collect_statistics_interval = 10000
+
+      auth_backends.1 = rabbit_auth_backend_oauth2
+      auth_backends.2 = rabbit_auth_backend_internal
+
+      management.oauth_enabled = true
+      management.oauth_client_id = b25e317f-0ba6-4f26-b012-a480a374e054
+      management.oauth_scopes = openid profile api://b25e317f-0ba6-4f26-b012-a480a374e054/rabbitmq
+      management.oauth_provider_url = https://login.microsoftonline.com/a9d2ff35-d2bb-4c3c-b4fe-15c9fc484fc2
+
+      auth_oauth2.resource_server_id = b25e317f-0ba6-4f26-b012-a480a374e054
+      auth_oauth2.additional_scopes_key = roles
+      auth_oauth2.jwks_url = https://login.microsoftonline.com/a9d2ff35-d2bb-4c3c-b4fe-15c9fc484fc2/discovery/v2.0/keys
+  persistence:
+    storage: "5Gi" # should be like 500Gi

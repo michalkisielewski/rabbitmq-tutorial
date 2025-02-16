@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: publisher
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: publisher
+  template:
+    metadata:
+      labels:
+        app: publisher
+    spec:
+      containers:
+      - name: publisher
+        image: mkisielewski/servicea:5
+        env:
+        - name: RABBITMQ_USER
+          value: "default_user_ncaRO4u0cxgvgMLDxIS"
+        - name: RABBITMQ_PASSWORD
+          value: "5YqRLc87JVNe5_1C7GYe-L3h3oxTtzef"
+        - name: RABBITMQ_HOST
+          value: "production-ready.default.svc"
+        - name: RABBITMQ_PORT
+          value: "5671"
+        - name: RABBITMQ_CLIENT_CERT_PATH
+          value: "/etc/ssl/certs/"
+        # # Optionally, if certificate requires a password:
+        # - name: RABBITMQ_CLIENT_CERT_PASSWORD
+        #   valueFrom:
+        #     secretKeyRef:
+        #       name: tls-secret
+        #       key: certPassword
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: rabbitmq-cert
+          mountPath: /etc/ssl/certs
+          readOnly: true
+      volumes:
+      - name: rabbitmq-cert
+        secret:
+          secretName: tls-secret
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: consumer
+  template:
+    metadata:
+      labels:
+        app: consumer
+    spec:
+      containers:
+      - name: consumer
+        image: mkisielewski/serviceb:3
+        env:
+        - name: RABBITMQ_USER
+          value: "default_user_ncaRO4u0cxgvgMLDxIS"
+        - name: RABBITMQ_PASSWORD
+          value: "5YqRLc87JVNe5_1C7GYe-L3h3oxTtzef"
+        - name: RABBITMQ_HOST
+          value: "production-ready.default.svc"
+        - name: RABBITMQ_PORT
+          value: "5671"
+        - name: RABBITMQ_CLIENT_CERT_PATH
+          value: "/etc/ssl/certs/"
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: rabbitmq-cert
+          mountPath: /etc/ssl/certs
+          readOnly: true
+      volumes:
+      - name: rabbitmq-cert
+        secret:
+          secretName: tls-secret
