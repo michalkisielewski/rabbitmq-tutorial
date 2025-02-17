@@ -17,7 +17,7 @@ spec:
   rabbitmq:
     additionalConfig: |
       # https://www.rabbitmq.com/configure.html
-      vm_memory_high_watermark.absolute = 7GB
+      vm_memory_high_watermark.absolute = 3GB
       vm_memory_high_watermark_paging_ratio = 0.99
 
       # management metrics can be disabled altogether
