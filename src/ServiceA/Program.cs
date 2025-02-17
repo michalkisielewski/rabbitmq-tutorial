@@ -1,6 +1,3 @@
-using System.IO;
-using System.Net.Security;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using RabbitMQ.Client;
 using Shared;
@@ -44,14 +41,6 @@ app.MapGet("/publish", async (string message = "Message sent") =>
 
     using var connection = await factory.CreateConnectionAsync();
     using var channel = await connection.CreateChannelAsync();
-
-    // Ensure the queue exists
-    await channel.QueueDeclareAsync(
-        queue: "test-queue",
-        durable: false,
-        exclusive: false,
-        autoDelete: false,
-        arguments: null);
 
     var body = new ReadOnlyMemory<byte>(Encoding.UTF8.GetBytes(message));
 

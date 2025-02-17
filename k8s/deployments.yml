@@ -14,12 +14,18 @@ spec:
     spec:
       containers:
       - name: publisher
-        image: mkisielewski/servicea:5
+        image: mkisielewski/servicea:7
         env:
         - name: RABBITMQ_USER
-          value: "default_user_ncaRO4u0cxgvgMLDxIS"
+          valueFrom:
+            secretKeyRef:
+              name: production-ready-default-user
+              key: username
         - name: RABBITMQ_PASSWORD
-          value: "5YqRLc87JVNe5_1C7GYe-L3h3oxTtzef"
+          valueFrom:
+            secretKeyRef:
+              name: production-ready-default-user
+              key: password
         - name: RABBITMQ_HOST
           value: "production-ready.default.svc"
         - name: RABBITMQ_PORT
@@ -59,12 +65,18 @@ spec:
     spec:
       containers:
       - name: consumer
-        image: mkisielewski/serviceb:3
+        image: mkisielewski/serviceb:4
         env:
         - name: RABBITMQ_USER
-          value: "default_user_ncaRO4u0cxgvgMLDxIS"
+          valueFrom:
+            secretKeyRef:
+              name: production-ready-default-user
+              key: username
         - name: RABBITMQ_PASSWORD
-          value: "5YqRLc87JVNe5_1C7GYe-L3h3oxTtzef"
+          valueFrom:
+            secretKeyRef:
+              name: production-ready-default-user
+              key: password
         - name: RABBITMQ_HOST
           value: "production-ready.default.svc"
         - name: RABBITMQ_PORT

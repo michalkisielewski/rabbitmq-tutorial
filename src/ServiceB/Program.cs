@@ -59,10 +59,13 @@ public class RabbitMqConsumerService : BackgroundService
         // Declare the queue asynchronously
         await _channel.QueueDeclareAsync(
             queue: "test-queue",
-            durable: false,
+            durable: true,
             exclusive: false,
             autoDelete: false,
-            arguments: null);
+            arguments: new Dictionary<string, object?>
+            {
+                { "x-queue-type",  "quorum" }
+            });
 
         // Use the asynchronous eventing consumer
         var consumer = new AsyncEventingBasicConsumer(_channel);
