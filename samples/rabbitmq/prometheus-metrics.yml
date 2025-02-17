@@ -62,15 +62,15 @@ spec:
         - name: RABBITMQ_USER
           valueFrom:
             secretKeyRef:
-              name: prometheus-metrics-rabbitmq-default-user
+              name: prometheus-metrics-default-user
               key: username
         - name: RABBITMQ_PASS
           valueFrom:
             secretKeyRef:
-              name: prometheus-metrics-rabbitmq-default-user
+              name: prometheus-metrics-default-user
               key: password
         - name: RABBITMQ_SERVICE
-          value: prometheus-metrics-rabbitmq-client
+          value: prometheus-metrics
 
         - name: PRODUCER_SCHEDULER_THREADS
           value: "500"

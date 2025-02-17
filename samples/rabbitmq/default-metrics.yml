@@ -81,15 +81,15 @@ spec:
         - name: RABBITMQ_USER
           valueFrom:
             secretKeyRef:
-              name: default-metrics-rabbitmq-default-user
+              name: default-metrics-default-user
               key: username
         - name: RABBITMQ_PASS
           valueFrom:
             secretKeyRef:
-              name: default-metrics-rabbitmq-default-user
+              name: default-metrics-default-user
               key: password
         - name: RABBITMQ_SERVICE
-          value: default-metrics-rabbitmq-client
+          value: default-metrics
 
         - name: PRODUCER_SCHEDULER_THREADS
           value: "500"

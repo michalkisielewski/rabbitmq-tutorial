@@ -62,15 +62,15 @@ spec:
         - name: RABBITMQ_USER
           valueFrom:
             secretKeyRef:
-              name: quorum-rabbitmq-default-user
+              name: quorum-default-user
               key: username
         - name: RABBITMQ_PASS
           valueFrom:
             secretKeyRef:
-              name: quorum-rabbitmq-default-user
+              name: quorum-default-user
               key: password
         - name: RABBITMQ_SERVICE
-          value: quorum-rabbitmq-client
+          value: quorum
 
         - name: PRODUCERS
           value: "100"
