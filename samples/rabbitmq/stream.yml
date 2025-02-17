@@ -10,10 +10,10 @@ spec:
   resources:
     limits:
       memory: 2G
-      cpu: 4
+      cpu: 2
     requests:
       memory: 2G
-      cpu: 4
+      cpu: 1
   rabbitmq:
     additionalConfig: |
       # https://www.rabbitmq.com/configure.html

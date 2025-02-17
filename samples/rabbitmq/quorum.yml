@@ -9,11 +9,11 @@ spec:
   replicas: 3
   resources:
     limits:
-      memory: 8G
-      cpu: 4
+      memory: 4G
+      cpu: 2
     requests:
-      memory: 8G
-      cpu: 4
+      memory: 4G
+      cpu: 1
   rabbitmq:
     additionalConfig: |
       # https://www.rabbitmq.com/configure.html
